@@ -14,24 +14,24 @@ public class UserCredentials implements Serializable{
 	
 	private static final long serialVersionUID = 21217L;
 
-	@Id
-	@Column(nullable = false, unique = true)
  	String username;
 	
-	@Column(nullable = false)
 	String password;
 	
 	Boolean enabled;
 
-	@OneToOne(mappedBy="userCredentials", cascade = CascadeType.PERSIST) 
- 	private User user;
+	private User user;
 	
- 	public String getUsername() {
+	@Id
+	@Column(nullable = false, unique = true)
+	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	@Column(nullable = false)
 	public String getPassword() {
 		return password;
 	}
@@ -46,6 +46,7 @@ public class UserCredentials implements Serializable{
 		this.enabled = enabled;
 	}
 	
+	@OneToOne(mappedBy="userCredentials", cascade = CascadeType.PERSIST) 
 	public User getUser() {
 		return user;
 	}

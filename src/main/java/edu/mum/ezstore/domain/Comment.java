@@ -17,19 +17,22 @@ public class Comment implements Serializable{
 	
 	private static final long serialVersionUID = 21215L;
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
 	private String comment;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	private Date date;
 	
-	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
- 	@JoinColumn(name="fromUser_id") 
 	private User fromUser;
 	
-	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
- 	@JoinColumn(name="toUser_id") 
 	private User toUser;
 	
 	public String getComment() {
@@ -44,12 +47,18 @@ public class Comment implements Serializable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
+ 	@JoinColumn(name="fromUser_id") 
 	public User getFromUser() {
 		return fromUser;
 	}
 	public void setFromUser(User fromUser) {
 		this.fromUser = fromUser;
 	}
+
+	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
+ 	@JoinColumn(name="toUser_id") 
 	public User getToUser() {
 		return toUser;
 	}
