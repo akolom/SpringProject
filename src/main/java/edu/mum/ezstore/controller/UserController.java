@@ -21,8 +21,7 @@ import edu.mum.ezstore.service.UserService;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
-
+	
     @Autowired
     private UserService userService;
 
