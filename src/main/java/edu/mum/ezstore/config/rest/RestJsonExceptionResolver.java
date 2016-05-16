@@ -215,14 +215,14 @@ public class RestJsonExceptionResolver extends AbstractHandlerExceptionResolver 
 		Map<Class<? extends Exception>, RestExceptionHandler> map = new HashMap<>();
 
 
-		addHandlerTo(map, HttpMediaTypeNotAcceptableException.class, NOT_ACCEPTABLE);
-		addHandlerTo(map, MissingServletRequestParameterException.class, BAD_REQUEST);
-		addHandlerTo(map, ServletRequestBindingException.class, BAD_REQUEST);
-		addHandlerTo(map, ConversionNotSupportedException.class, INTERNAL_SERVER_ERROR);
-		addHandlerTo(map, TypeMismatchException.class, BAD_REQUEST);
-		addHandlerTo(map, HttpMessageNotReadableException.class, UNPROCESSABLE_ENTITY);
-		addHandlerTo(map, HttpMessageNotWritableException.class, INTERNAL_SERVER_ERROR);
-		addHandlerTo(map, MissingServletRequestPartException.class, BAD_REQUEST);
+//		addHandlerTo(map, HttpMediaTypeNotAcceptableException.class, NOT_ACCEPTABLE);
+//		addHandlerTo(map, MissingServletRequestParameterException.class, BAD_REQUEST);
+//		addHandlerTo(map, ServletRequestBindingException.class, BAD_REQUEST);
+//		addHandlerTo(map, ConversionNotSupportedException.class, INTERNAL_SERVER_ERROR);
+//		addHandlerTo(map, TypeMismatchException.class, BAD_REQUEST);
+//		addHandlerTo(map, HttpMessageNotReadableException.class, UNPROCESSABLE_ENTITY);
+//		addHandlerTo(map, HttpMessageNotWritableException.class, INTERNAL_SERVER_ERROR);
+//		addHandlerTo(map, MissingServletRequestPartException.class, BAD_REQUEST);
 		addHandlerTo(map, UnknownResourceException.class, NOT_FOUND);
 		addHandlerTo(map, Exception.class, INTERNAL_SERVER_ERROR);
 

@@ -1,6 +1,5 @@
 package edu.mum.ezstore.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.math.NumberUtils;
@@ -11,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,7 @@ import com.egen.exhandle.exception.InvalidArgumentsException;
 import com.egen.exhandle.exception.ObjectNotFoundException;
 
 import edu.mum.ezstore.domain.User;
+import edu.mum.ezstore.domain.UserCredentials;
 import edu.mum.ezstore.service.UserService;
 
 
@@ -29,20 +31,27 @@ import edu.mum.ezstore.service.UserService;
 public class TestController {
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
 
-    //private List<User> userList;
-    
-    
     private UserService userService;
 
     @Autowired
     public TestController(UserService userService) {
     	this.userService=userService;
     	//userList = new ArrayList<User>();
-    	User c1 = new User();
+        
+        UserCredentials userCredential=new UserCredentials();
+        userCredential.setUsername("sammy");
+        PasswordEncoder encoder=new BCryptPasswordEncoder();
+        
+        userCredential.setPassword(encoder.encode("123456"));
+        userCredential.setAuthorithy("Admin");
+        userCredential.setEnabled(true);
+        
+        User c1 = new User();
         c1.setFirstName("Chi Proeng");
         c1.setLastName("Dov");
         c1.setAge(24);
         c1.setGender('M');
+        c1.setUserCredentials(userCredential);
         userService.save(c1);
         //userList.add(c1);
 

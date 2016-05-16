@@ -19,8 +19,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  *
  */
 @Configuration
-@ComponentScan(basePackages={"edu.mum.ezstore"},
-		excludeFilters=@ComponentScan.Filter(type=FilterType.ANNOTATION,value=EnableWebMvc.class))
+@ComponentScan(basePackages={"edu.mum.ezstore.service"})
+//		excludeFilters={@ComponentScan.Filter(type=FilterType.ANNOTATION,value=EnableWebMvc.class),
+//				@ComponentScan.Filter(type=FilterType.REGEX,pattern={"edu.mum.ezstore.controller"})})
 @PropertySource(value = {"classpath:application.properties" })
 //@EnableScheduling
 //@EnableAspectJAutoProxy

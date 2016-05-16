@@ -8,19 +8,24 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
  
 @Entity
 public class UserCredentials implements Serializable{
 	
 	private static final long serialVersionUID = 21217L;
-
+	
  	String username;
 	
 	String password;
 	
 	Boolean enabled;
+	
+	private String authorithy;
 
-	private User user;
+//	private User user;
 	
 	@Id
 	@Column(nullable = false, unique = true)
@@ -46,12 +51,18 @@ public class UserCredentials implements Serializable{
 		this.enabled = enabled;
 	}
 	
-	@OneToOne(mappedBy="userCredentials", cascade = CascadeType.PERSIST) 
-	public User getUser() {
-		return user;
+//	@OneToOne(mappedBy="userCredentials", cascade = CascadeType.PERSIST) 
+//	public User getUser() {
+//		return user;
+//	}
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
+	public String getAuthorithy() {
+		return authorithy;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setAuthorithy(String authorithy) {
+		this.authorithy = authorithy;
 	}
  
  	
