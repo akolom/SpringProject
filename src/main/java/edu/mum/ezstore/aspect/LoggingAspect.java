@@ -15,7 +15,7 @@ import edu.mum.ezstore.controller.TestController;
 public class LoggingAspect {
 	private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
 	
-		@Pointcut("execution(* edu.mum.ezstore..*(..))")
+		@Pointcut("within (edu.mum.ezstore..*)")
 		public void allEzStoreMethod(){}
 		
 

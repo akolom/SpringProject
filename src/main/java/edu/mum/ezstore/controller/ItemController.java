@@ -39,8 +39,8 @@ public class ItemController {
     
     @RequestMapping(value = "/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Item>> getAllItems() {
-        List<Item> users= itemService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);    
+        List<Item> items= itemService.findAll();
+        return new ResponseEntity<>(items, HttpStatus.OK);    
     }
     
     @RequestMapping("/get/{id}")

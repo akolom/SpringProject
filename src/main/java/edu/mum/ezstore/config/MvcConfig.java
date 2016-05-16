@@ -65,11 +65,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter{
 	@Bean
     public RestJsonExceptionResolver restJsonExceptionResolver() {
 	    RestJsonExceptionResolver bean = new RestJsonExceptionResolver(httpErrorMessageSource());
-	    // map any spring and servlet exception class here
-	    RestJsonExceptionResolver.registerExceptionWithHTTPCode(org.springframework.beans.TypeMismatchException.class, 400);
-        RestJsonExceptionResolver.registerExceptionWithHTTPCode(MissingServletRequestParameterException.class, 400);
-        RestJsonExceptionResolver.registerExceptionWithHTTPCode(MethodArgumentNotValidException.class, 400);
-        RestJsonExceptionResolver.registerExceptionWithHTTPCode(ServletRequestBindingException.class, 400);
+	    // map any spring and servlet exception class here	   
         bean.setOrder(100);
 	    return bean;
     }

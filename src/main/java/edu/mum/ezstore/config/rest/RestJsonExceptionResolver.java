@@ -6,21 +6,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.ConversionNotSupportedException;
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.converter.HttpMessageNotWritableException;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.ServletRequestBindingException;
-import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
@@ -28,15 +20,20 @@ import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 import com.egen.exhandle.exception.AuthenticationException;
 import com.egen.exhandle.exception.AuthorizationException;
 import com.egen.exhandle.exception.BusinessException;
+import com.egen.exhandle.exception.DomainValidationException;
 import com.egen.exhandle.exception.InvalidArgumentsException;
 import com.egen.exhandle.exception.MaximumRequestsLimitException;
 import com.egen.exhandle.exception.ObjectAlreadyExistsException;
 import com.egen.exhandle.exception.ObjectNotFoundException;
 import com.egen.exhandle.exception.ObjectStateChangedSinceLastRequestException;
 import com.egen.exhandle.exception.UnknownResourceException;
+import com.egen.exhandle.handler.ConstraintViolationExceptionHandler;
+import com.egen.exhandle.handler.DomainValidationExceptionHandler;
 import com.egen.exhandle.handler.ErrorMessageRestExceptionHandler;
 import com.egen.exhandle.handler.RestExceptionHandler;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.springframework.http.HttpStatus.*;
@@ -57,22 +54,14 @@ public class RestJsonExceptionResolver extends AbstractHandlerExceptionResolver 
 	 * Disable technical diagnostics like stack traces. Default value is FALSE
 	 */
 	private boolean diagnosticsDisabled;
-
-	static {
-		httpErrorCodeMap.put(InvalidArgumentsException.class.getName(), 400);
-		httpErrorCodeMap.put(AuthenticationException.class.getName(), 401);
-		httpErrorCodeMap.put(AuthorizationException.class.getName(), 403);
-		httpErrorCodeMap.put(ObjectNotFoundException.class.getName(), 404);
-		httpErrorCodeMap.put(UnknownResourceException.class.getName(), 404);
-		httpErrorCodeMap.put(ObjectAlreadyExistsException.class.getName(), 409);
-		httpErrorCodeMap.put(ObjectStateChangedSinceLastRequestException.class.getName(), 409);
-		httpErrorCodeMap.put(MaximumRequestsLimitException.class.getName(), 429);
-		httpErrorCodeMap.put(BusinessException.class.getName(), 500);
-	}
+	
 
 	public RestJsonExceptionResolver(MessageSource msg) {
 		MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		MAPPER.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+		// to map all the children of class
+		MAPPER.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+
 		this.setMessageSource(msg);
 		handlers = getDefaultHandlers();
 		// initialize handlers
@@ -157,9 +146,9 @@ public class RestJsonExceptionResolver extends AbstractHandlerExceptionResolver 
 	protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
 			Exception e) {
 		ModelAndView mav = new ModelAndView(this);
-		RestError error = new RestError();
+		Object error;
 		try {
-			error = (RestError) handleException(e, request);
+			error = handleException(e, request);
 		} catch (NoExceptionHandlerFoundException ex) {
 			LOG.warn("No exception handler found to handle exception: {}", e.getClass().getName());
 			return null;
@@ -175,10 +164,10 @@ public class RestJsonExceptionResolver extends AbstractHandlerExceptionResolver 
 	@Override
 	public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		RestError e = (RestError) model.get(KEY_ERROR_OBJECT);
-
+		Object e = model.get(KEY_ERROR_OBJECT);
+		RestError er=(RestError) e;
 		response.setContentType(getContentType());
-		response.setStatus(e.getHttpCode());
+		response.setStatus(er.getHttpCode());
 
 		MAPPER.writeValue(response.getOutputStream(), e);
 	}
@@ -187,33 +176,16 @@ public class RestJsonExceptionResolver extends AbstractHandlerExceptionResolver 
 	public String getContentType() {
 		return "application/json";
 	}
-
-	/**
-	 * Register a specific Exception to always return the supplied HTTP response
-	 * code.
-	 *
-	 * @param e
-	 *            Exception to register
-	 * @param httpResponseCode
-	 *            The HTTP response code to send back to the client for this
-	 *            given Exception
-	 */
-	public static void registerExceptionWithHTTPCode(Exception e, int httpResponseCode) {
-		httpErrorCodeMap.put(e.getClass().getName(), httpResponseCode);
-	}
-
-	public static void registerExceptionWithHTTPCode(Class<? extends Exception> clazz, int httpResponseCode) {
-		httpErrorCodeMap.put(clazz.getName(), httpResponseCode);
-	}
-
+	
 	public void setDiagnosticsDisabled(boolean diagnosticsDisabled) {
 		this.diagnosticsDisabled = diagnosticsDisabled;
 	}
 
-	private Map<Class<? extends Exception>, RestExceptionHandler> getDefaultHandlers() {
-
+	private Map<Class<? extends Exception>, RestExceptionHandler> getDefaultHandlers() {		
 		Map<Class<? extends Exception>, RestExceptionHandler> map = new HashMap<>();
 
+		map.put( DomainValidationException.class, new DomainValidationExceptionHandler() );
+		map.put( ConstraintViolationException.class, new ConstraintViolationExceptionHandler() );
 
 //		addHandlerTo(map, HttpMediaTypeNotAcceptableException.class, NOT_ACCEPTABLE);
 //		addHandlerTo(map, MissingServletRequestParameterException.class, BAD_REQUEST);

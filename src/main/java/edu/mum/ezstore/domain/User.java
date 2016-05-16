@@ -15,7 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -24,6 +28,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 21212L;
 
 	private long id;
+	@Size(min=2, message="{Size.character.validation}")
 	private String firstName;
 	private String lastName;
 
@@ -32,6 +37,9 @@ public class User implements Serializable {
 
 	private List<Address> addressSet = new ArrayList<>();
 	private List<Item> itemSet = new ArrayList<>();
+	
+	@Valid
+	@NotNull
 	private UserCredentials userCredentials;
 	private Set<Comment> commentSet = new HashSet<>();
 
@@ -98,7 +106,7 @@ public class User implements Serializable {
 		this.itemSet = itemSet;
 	}
 
-	@JsonIgnore
+	@JsonBackReference
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "usrCred_id")
 	public UserCredentials getUserCredentials() {

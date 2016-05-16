@@ -37,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		UserCredentials user = userCredentialService.findByUserName(username);
 		if (user == null)
 			throw new UsernameNotFoundException("user not found!");
-		List<GrantedAuthority> authorities = buildUserAuthority(user.getAuthorithy());
+		List<GrantedAuthority> authorities = buildUserAuthority(user.getAuthority());
 		return buildUserForAuthentication(user, authorities);
 
 	}

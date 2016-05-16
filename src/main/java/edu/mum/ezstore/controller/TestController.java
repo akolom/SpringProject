@@ -38,21 +38,21 @@ public class TestController {
     	this.userService=userService;
     	//userList = new ArrayList<User>();
         
-        UserCredentials userCredential=new UserCredentials();
-        userCredential.setUsername("sammy");
-        PasswordEncoder encoder=new BCryptPasswordEncoder();
-        
-        userCredential.setPassword(encoder.encode("123456"));
-        userCredential.setAuthorithy("Admin");
-        userCredential.setEnabled(true);
-        
-        User c1 = new User();
-        c1.setFirstName("Chi Proeng");
-        c1.setLastName("Dov");
-        c1.setAge(24);
-        c1.setGender('M');
-        c1.setUserCredentials(userCredential);
-        userService.save(c1);
+//        UserCredentials userCredential=new UserCredentials();
+//        userCredential.setUsername("samm");
+//        PasswordEncoder encoder=new BCryptPasswordEncoder();
+//        
+//        userCredential.setPassword(encoder.encode("12345"));
+//        userCredential.setAuthorithy("Admin");
+//        userCredential.setEnabled(true);
+//        
+//        User c1 = new User();
+//        c1.setFirstName("C");
+//        c1.setLastName("Dov");
+//        c1.setAge(24);
+//        c1.setGender('M');
+//        c1.setUserCredentials(userCredential);
+//        userService.save(c1);
         //userList.add(c1);
 
     }

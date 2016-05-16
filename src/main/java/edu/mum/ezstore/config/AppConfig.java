@@ -13,6 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -20,7 +21,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  *
  */
 @Configuration
-@ComponentScan(basePackages={"edu.mum.ezstore.service"})
+@ComponentScan(basePackages={"edu.mum.ezstore.validator","edu.mum.ezstore.service"})
 //		excludeFilters={@ComponentScan.Filter(type=FilterType.ANNOTATION,value=EnableWebMvc.class),
 //				@ComponentScan.Filter(type=FilterType.REGEX,pattern={"edu.mum.ezstore.controller"})})
 @PropertySource(value = {"classpath:application.properties" })
@@ -51,13 +52,13 @@ public class AppConfig {
 		return msg;
 	}
 	
-//	@Bean(name = "validator")
-//	public LocalValidatorFactoryBean validator()
-//	{
-//	    LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-//	    bean.setValidationMessageSource(messageSource());
-//	    return bean;
-//	}
+	@Bean(name = "validator")
+	public LocalValidatorFactoryBean validator()
+	{
+	    LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+	    bean.setValidationMessageSource(messageSource());
+	    return bean;
+	}
 //
 //	@Bean
 //	public CacheManager cacheManager()

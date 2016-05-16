@@ -28,6 +28,9 @@ public class Address implements Serializable {
 	private String zip;
 	private User user;
 	
+	public Address() {
+	}
+
 	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

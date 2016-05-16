@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
  
 @Entity
@@ -12,13 +13,15 @@ public class UserCredentials implements Serializable{
 	
 	private static final long serialVersionUID = 21217L;
 	
+	@Size(min=5, message="{Size.character.validation}")
  	String username;
 	
+	@Size(min=6, message="{Size.character.validation}")
 	String password;
 	
 	Boolean enabled;
 	
-	private String authorithy;
+	private String authority;
 
 //	private User user;
 	
@@ -53,11 +56,12 @@ public class UserCredentials implements Serializable{
 //	public void setUser(User user) {
 //		this.user = user;
 //	}
-	public String getAuthorithy() {
-		return authorithy;
+	
+	public String getAuthority() {
+		return authority;
 	}
-	public void setAuthorithy(String authorithy) {
-		this.authorithy = authorithy;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
  
  	
