@@ -1,6 +1,4 @@
 package edu.mum.ezstore.controller;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.math.NumberUtils;
@@ -29,23 +27,11 @@ import edu.mum.ezstore.service.UserService;
 public class TestController {
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
 
-    //private List<User> userList;
-    
-    
     private UserService userService;
 
     @Autowired
     public TestController(UserService userService) {
     	this.userService=userService;
-    	//userList = new ArrayList<User>();
-    	User c1 = new User();
-        c1.setFirstName("Chi Proeng");
-        c1.setLastName("Dov");
-        c1.setAge(24);
-        c1.setGender('M');
-        userService.save(c1);
-        //userList.add(c1);
-
     }
 
     @RequestMapping(value = "/v1/customers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

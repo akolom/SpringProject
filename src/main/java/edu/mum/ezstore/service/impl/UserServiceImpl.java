@@ -15,13 +15,15 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
 	}
 
-	@Override
-	public void save(User user) {
-		userRepository.save(user);
+	public User save(User user) {
+		return userRepository.save(user);
+	}
+	
+	public User findOne(Long id){
+		return userRepository.findOne(id);
 	}
 }
