@@ -37,7 +37,6 @@ public class TestController {
     @RequestMapping(value = "/v1/customers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getAllCustomer() {
 
-        LOG.info(">>>>>>>>>>>>>>> get all customer >>>>>>>>>>");
         List<User> users=userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }

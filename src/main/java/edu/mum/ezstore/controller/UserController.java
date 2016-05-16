@@ -28,23 +28,18 @@ public class UserController {
 
     @RequestMapping(value="/add", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> createUser(@RequestBody User user) {
-    	LOG.info(">>>>>>>>>>>>>>> add a user >>>>>>>>>>");
-    		
 		User savedUser = userService.save(user);
 		return new ResponseEntity<User>(savedUser, HttpStatus.CREATED);
 	}
     
     @RequestMapping(value="/update", method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
-    	LOG.info(">>>>>>>>>>>>>>> add a user >>>>>>>>>>");
     	User savedUser = userService.save(user);
 		return new ResponseEntity<User>(savedUser, HttpStatus.OK);
 	}
     
     @RequestMapping(value = "/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getAllUsers() {
-
-        LOG.info(">>>>>>>>>>>>>>> get all users >>>>>>>>>>");
         List<User> users=userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);    
     }

@@ -65,15 +65,8 @@ public class Item implements Serializable {
 	}
 
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "seller_id")
-
-	/*
-	 * @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	 * 
-	 * @JoinColumn(name = "seller_id")
-	 */
-
 	public User getSeller() {
 		return seller;
 	}

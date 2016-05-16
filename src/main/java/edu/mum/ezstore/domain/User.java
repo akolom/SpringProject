@@ -90,7 +90,7 @@ public class User implements Serializable {
 	}
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "seller")
 	public List<Item> getItemSet() {
 		return itemSet;
 	}
