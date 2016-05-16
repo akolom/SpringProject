@@ -18,39 +18,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 import edu.mum.ezstore.exception.BusinessException;
 import edu.mum.ezstore.exception.InvalidArgumentsException;
 import edu.mum.ezstore.exception.ObjectNotFoundException;
-import edu.mum.ezstore.json.Customer;
+import edu.mum.ezstore.json.User;
 
 @Controller
 @RequestMapping("/demo")
 public class TestController {
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
 
-    private List<Customer> customerList;
+    private List<User> userList;
 
     public TestController() {
-        customerList = new ArrayList<Customer>();
-        Customer c1 = new Customer();
+    	userList = new ArrayList<User>();
+    	User c1 = new User();
         c1.setName("Chi Proeng Dov");
         c1.setAge(24);
         c1.setGender('M');
-        customerList.add(c1);
+        userList.add(c1);
 
-        Customer c2 = new Customer();
+        User c2 = new User();
         c2.setName("David Villa");
         c2.setAge(20);
         c2.setGender('M');
-        customerList.add(c2);
+        userList.add(c2);
     }
 
     @RequestMapping(value = "/v1/customers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Customer>> getAllCustomer() {
+    public ResponseEntity<List<User>> getAllCustomer() {
 
         LOG.info(">>>>>>>>>>>>>>> get all customer >>>>>>>>>>");
-        return new ResponseEntity<>(customerList, HttpStatus.OK);
+        return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/v1/customers/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomer(@RequestParam String name) {
+    public ResponseEntity<User> getCustomer(@RequestParam String name) {
 
         if(StringUtils.equalsIgnoreCase(name, "error")) {
             throw new BusinessException("Server error, please contact your admin", 200);
@@ -60,17 +60,17 @@ public class TestController {
             throw new InvalidArgumentsException(String.format("[Name=%s] must be string", name));
         }
 
-        Customer c = searchName(name);
+        User c = searchName(name);
         if(c == null) {
             throw new ObjectNotFoundException(String.format("[Name=%s] search not found.", name));
         }
 
         LOG.info(">>>>>>>>>>>>>>> say name you pass: " + c.getName());
-        return new ResponseEntity<Customer>(c, HttpStatus.OK);
+        return new ResponseEntity<User>(c, HttpStatus.OK);
     }
 
-    private Customer searchName(String name) {
-        for(Customer c : customerList) {
+    private User searchName(String name) {
+        for(User c : userList) {
             if(StringUtils.equalsIgnoreCase(name, c.getName())) {
                 return c;
             }
