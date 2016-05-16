@@ -31,10 +31,11 @@ public class TestController {
 
     //private List<User> userList;
     
-    @Autowired
+    
     private UserService userService;
 
-    public TestController() {
+    @Autowired
+    public TestController(UserService userService) {
     	//userList = new ArrayList<User>();
     	User c1 = new User();
         c1.setFirstName("Chi Proeng");
