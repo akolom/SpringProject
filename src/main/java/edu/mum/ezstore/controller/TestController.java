@@ -36,6 +36,7 @@ public class TestController {
 
     @Autowired
     public TestController(UserService userService) {
+    	this.userService=userService;
     	//userList = new ArrayList<User>();
     	User c1 = new User();
         c1.setFirstName("Chi Proeng");
@@ -51,7 +52,8 @@ public class TestController {
     public ResponseEntity<List<User>> getAllCustomer() {
 
         LOG.info(">>>>>>>>>>>>>>> get all customer >>>>>>>>>>");
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+        List<User> users=userService.findAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/v1/customers/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

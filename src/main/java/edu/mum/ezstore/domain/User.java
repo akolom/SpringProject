@@ -1,7 +1,9 @@
 package edu.mum.ezstore.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,13 +16,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 21212L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	
 	private long id;
 	
 	private String firstName;
@@ -29,17 +33,23 @@ public class User implements Serializable{
 	private int age;
 	private char gender;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="user") 
-	private Set<Address> addressSet = new HashSet<>();
 	
-	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
- 	@JoinColumn(name="usrCred_id") 
+	private List<Address> addressSet = new ArrayList<>();
+	
+	
 	private UserCredentials userCredentials;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="toUser") 
+	
 	private Set<Comment> commentSet = new HashSet<>();
 	
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public int getAge() {
 		return age;
 	}
@@ -64,19 +74,34 @@ public class User implements Serializable{
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public Set<Address> getAddress() {
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="user") 
+	public List<Address> getAddress() {
 		return addressSet;
 	}
-	public void setAddress(Set<Address> addressSet) {
+	public void setAddress(List<Address> addressSet) {
 		this.addressSet = addressSet;
 	}
-	public void addAdress(Address address) {
-		this.addressSet.add(address);
-	}
+	
+	@JsonIgnore
+	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
+ 	@JoinColumn(name="usrCred_id") 
 	public UserCredentials getUserCredentials() {
 		return userCredentials;
 	}
 	public void setUserCredentials(UserCredentials userCredentials) {
 		this.userCredentials = userCredentials;
+	}
+	
+	public void addAdress(Address address) {
+		this.addressSet.add(address);
+	}
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="toUser") 
+	public Set<Comment> getCommentSet() {
+		return commentSet;
+	}
+	public void setCommentSet(Set<Comment> commentSet) {
+		this.commentSet = commentSet;
 	}
 }
