@@ -3,9 +3,9 @@ package edu.mum.ezstore.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import edu.mum.ezstore.domain.Customer;
+import edu.mum.ezstore.domain.User;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<String, Customer>{
+public interface UserRepository extends JpaRepository<User, String>{
 
 }

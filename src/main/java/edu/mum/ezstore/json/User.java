@@ -3,7 +3,7 @@ package edu.mum.ezstore.json;
 import java.io.Serializable;
 
 
-public class Customer implements Serializable{
+public class User implements Serializable{
 	private String name ; 
 	private int age;
 	private char gender;
