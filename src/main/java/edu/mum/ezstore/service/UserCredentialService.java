@@ -8,6 +8,6 @@ public interface UserCredentialService {
 
 	public List<UserCredentials> findAll();
 	public UserCredentials save(UserCredentials usercredentials);
-	public UserCredentials findOne(Long id);
+	public UserCredentials findOne(String userName);
 	
 }

@@ -8,6 +8,6 @@ import edu.mum.ezstore.domain.User;
 public interface OrderService {
 
 	public List<Order> findAll();
-	public Order save(Order user);
-	public Order findOne(Long id);	
+	public Order save(Order order);
+	public Order findOne(Long order_ID);	
 }
