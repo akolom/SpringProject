@@ -13,25 +13,43 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Address implements Serializable{
-	
+public class Address implements Serializable {
+
 	private static final long serialVersionUID = 21213L;
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+
 	private long id;
-	
 	private String city;
 	private String state;
 	private String street;
-	
-	private String zip;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_id")
- 	private User user;
+	private String zip;
+	private User user;
 	
+	@JsonIgnore
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public String getCity() {
 		return city;
 	}

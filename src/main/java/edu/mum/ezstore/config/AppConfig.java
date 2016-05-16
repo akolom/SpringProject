@@ -7,6 +7,7 @@ package edu.mum.ezstore.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -24,7 +25,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 //				@ComponentScan.Filter(type=FilterType.REGEX,pattern={"edu.mum.ezstore.controller"})})
 @PropertySource(value = {"classpath:application.properties" })
 //@EnableScheduling
-//@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy
 //@EnableCaching
 public class AppConfig {
 

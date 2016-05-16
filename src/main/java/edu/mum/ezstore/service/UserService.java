@@ -7,5 +7,6 @@ import edu.mum.ezstore.domain.User;
 
 public interface UserService {
 	public List<User> findAll();
-	public void save(User user);
+	public User save(User user);
+	public User findOne(Long id);
 }

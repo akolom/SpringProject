@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Comment implements Serializable{
 	
@@ -21,6 +23,7 @@ public class Comment implements Serializable{
 	
 	private String comment;
 	
+	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public long getId() {
@@ -47,7 +50,8 @@ public class Comment implements Serializable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+	
+	@JsonIgnore
 	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
  	@JoinColumn(name="fromUser_id") 
 	public User getFromUser() {
@@ -57,6 +61,7 @@ public class Comment implements Serializable{
 		this.fromUser = fromUser;
 	}
 
+	@JsonIgnore
 	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
  	@JoinColumn(name="toUser_id") 
 	public User getToUser() {

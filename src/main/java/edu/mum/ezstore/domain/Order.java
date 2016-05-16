@@ -11,49 +11,55 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Order implements Serializable{
+public class Order implements Serializable {
 	private static final long serialVersionUID = 21216L;
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+
 	private long id;
-	
-	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
- 	@JoinColumn(name="seller_id") 
-	private User seller;
-	
-	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
- 	@JoinColumn(name="buyer_id") 
 	private User buyer;
-	
-	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
- 	@JoinColumn(name="item_id") 
 	private Item item;
-	
+
+	@JsonIgnore
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	private double price;
-	
-	public User getSeller() {
-		return seller;
-	}
-	public void setSeller(User seller) {
-		this.seller = seller;
-	}
+
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "buyer_id")
 	public User getBuyer() {
 		return buyer;
 	}
+
 	public void setBuyer(User buyer) {
 		this.buyer = buyer;
 	}
+
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "item_id")
 	public Item getItem() {
 		return item;
 	}
+
 	public void setItem(Item item) {
 		this.item = item;
 	}
+
 	public double getPrice() {
 		return price;
 	}
+
 	public void setPrice(double price) {
 		this.price = price;
 	}
