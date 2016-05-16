@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
  
 @Entity
 public class UserCredentials implements Serializable{
@@ -22,6 +24,7 @@ public class UserCredentials implements Serializable{
 
 	private User user;
 	
+	@JsonIgnore
 	@Id
 	@Column(nullable = false, unique = true)
 	public String getUsername() {
@@ -31,6 +34,7 @@ public class UserCredentials implements Serializable{
 		this.username = username;
 	}
 	
+	@JsonIgnore
 	@Column(nullable = false)
 	public String getPassword() {
 		return password;
@@ -46,6 +50,7 @@ public class UserCredentials implements Serializable{
 		this.enabled = enabled;
 	}
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="userCredentials", cascade = CascadeType.PERSIST) 
 	public User getUser() {
 		return user;
