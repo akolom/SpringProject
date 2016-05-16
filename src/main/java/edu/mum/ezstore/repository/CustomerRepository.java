@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import edu.mum.ezstore.domain.Customer;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<String, Customer>{
+public interface CustomerRepository extends JpaRepository<Customer, String>{
 
 }

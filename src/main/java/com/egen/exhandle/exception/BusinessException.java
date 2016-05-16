@@ -1,4 +1,4 @@
-package edu.mum.ezstore.exception;
+package com.egen.exhandle.exception;
 
 @SuppressWarnings("serial")
 public class BusinessException extends RuntimeException {

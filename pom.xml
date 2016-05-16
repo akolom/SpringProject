@@ -155,7 +155,7 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/resources/json-sanitizer-1.1.jar</systemPath>
 		</dependency>
-
+				
 	</dependencies>
 	<build>
 		<plugins>
