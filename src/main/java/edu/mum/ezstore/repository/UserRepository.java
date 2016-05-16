@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import edu.mum.ezstore.domain.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String>{
-
+public interface UserRepository extends JpaRepository<User, Long>{
+	
 }

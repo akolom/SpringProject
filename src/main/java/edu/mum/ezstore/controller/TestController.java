@@ -7,6 +7,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,8 @@ import com.egen.exhandle.exception.BusinessException;
 import com.egen.exhandle.exception.InvalidArgumentsException;
 import com.egen.exhandle.exception.ObjectNotFoundException;
 
-import edu.mum.ezstore.json.User;
+import edu.mum.ezstore.domain.User;
+import edu.mum.ezstore.service.UserService;
 
 
 @Controller
@@ -27,28 +29,28 @@ import edu.mum.ezstore.json.User;
 public class TestController {
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
 
-    private List<User> userList;
+    //private List<User> userList;
+    
+    @Autowired
+    private UserService userService;
 
     public TestController() {
-    	userList = new ArrayList<User>();
+    	//userList = new ArrayList<User>();
     	User c1 = new User();
-        c1.setName("Chi Proeng Dov");
+        c1.setFirstName("Chi Proeng");
+        c1.setLastName("Dov");
         c1.setAge(24);
         c1.setGender('M');
-        userList.add(c1);
+        userService.save(c1);
+        //userList.add(c1);
 
-        User c2 = new User();
-        c2.setName("David Villa");
-        c2.setAge(20);
-        c2.setGender('M');
-        userList.add(c2);
     }
 
     @RequestMapping(value = "/v1/customers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getAllCustomer() {
 
         LOG.info(">>>>>>>>>>>>>>> get all customer >>>>>>>>>>");
-        return new ResponseEntity<>(userList, HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/v1/customers/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,13 +69,13 @@ public class TestController {
             throw new ObjectNotFoundException(String.format("[Name=%s] search not found.", name));
         }
 
-        LOG.info(">>>>>>>>>>>>>>> say name you pass: " + c.getName());
+        LOG.info(">>>>>>>>>>>>>>> say name you pass: " + c.getFirstName());
         return new ResponseEntity<User>(c, HttpStatus.OK);
     }
 
     private User searchName(String name) {
-        for(User c : userList) {
-            if(StringUtils.equalsIgnoreCase(name, c.getName())) {
+        for(User c : userService.findAll()) {
+            if(StringUtils.equalsIgnoreCase(name, c.getFirstName())) {
                 return c;
             }
         }

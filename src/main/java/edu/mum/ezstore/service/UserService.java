@@ -1,8 +1,11 @@
 package edu.mum.ezstore.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class UserService {
 
+import edu.mum.ezstore.domain.User;
+
+public interface UserService {
+	public List<User> findAll();
+	public void save(User user);
 }
