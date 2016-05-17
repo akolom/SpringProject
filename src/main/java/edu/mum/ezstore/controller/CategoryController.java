@@ -17,32 +17,33 @@ import edu.mum.ezstore.service.CategoryService;
 
 @RestController
 @RequestMapping("/category")
-
 public class CategoryController {
 	
 	@Autowired
-	private CategoryService categoryService;
+    private CategoryService categoryService;
 
-	@RequestMapping(value= "/add", method= RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/add", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Category> createCategory(@RequestBody Category category) {
 		Category savedCategory = categoryService.save(category);
 		return new ResponseEntity<Category>(savedCategory, HttpStatus.CREATED);
 	}
-	
-	@RequestMapping(value= "/update", method= RequestMethod.PUT, produces= MediaType.APPLICATION_JSON_VALUE)
+    
+    @RequestMapping(value="/update", method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
-		Category savedCategory = categoryService.save(category);
+    	Category savedCategory = categoryService.save(category);
 		return new ResponseEntity<Category>(savedCategory, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value= "/getall", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Category>> getAllCategories() {
-		List<Category> categories = categoryService.findAll();
-		return new ResponseEntity<>(categories, HttpStatus.OK);
+    
+    @RequestMapping(value = "/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Category>> getAllCategories() {
+        List<Category> categories =categoryService.findAll();
+        return new ResponseEntity<>(categories, HttpStatus.OK);    
+    }
+    
+    @RequestMapping("/get/{id}")
+	public Category getCategoryById(@PathVariable("id") Long id) {
+		return  categoryService.findOne(id);
+ 
 	}
-	
-	@RequestMapping(value="/get/{id}", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	public Category getCategoryById(@PathVariable("id") Long id){
-		return categoryService.findOne(id);
-	}
+
 }
