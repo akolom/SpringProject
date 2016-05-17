@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ public class ItemServiceImpl implements ItemService {
 	public List<Item> findAll(){
 		return itemRepository.findAll();
 	}
+
+	@AnnotationValidation
 	public Item save(Item item){
 		return itemRepository.save(item);
 	}

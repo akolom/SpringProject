@@ -21,7 +21,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  *
  */
 @Configuration
-@ComponentScan(basePackages={"edu.mum.ezstore.validator","edu.mum.ezstore.service","edu.mum.ezstore.security"})
+@ComponentScan(basePackages={"edu.mum.ezstore.validator","edu.mum.ezstore.service", "edu.mum.ezstore.aspect","edu.mum.ezstore.security"})
 //		excludeFilters={@ComponentScan.Filter(type=FilterType.ANNOTATION,value=EnableWebMvc.class),
 //				@ComponentScan.Filter(type=FilterType.REGEX,pattern={"edu.mum.ezstore.controller"})})
 @PropertySource(value = {"classpath:application.properties" })

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ public class CommentServiceImpl implements CommentService {
 	public List<Comment> findAll(){
 		return commentRepository.findAll();
 	}
+
+	@AnnotationValidation
 	public Comment save(Comment comment){
 		return commentRepository.save(comment);
 	}

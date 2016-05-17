@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,11 +25,20 @@ public class Address implements Serializable {
 	private static final long serialVersionUID = 21213L;
 
 	private long id;
+	
+	@NotEmpty (message="{NotEmpty}")
 	private String city;
+	
+	@NotEmpty (message="{NotEmpty}")
+	@Size(min = 2, max= 2, message="{StateValiation}")
 	private String state;
+	
+	@NotEmpty (message="{NotEmpty}")
 	private String street;
 
+	@Pattern(regexp="^\\d{5}?$",message="{ZipcodeValidation}")
 	private String zip;
+	
 	private User user;
 	
 	public Address() {
