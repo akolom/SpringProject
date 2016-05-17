@@ -16,7 +16,7 @@ public class ValidationAspect {
 	 	@Autowired
 	    private AnnotationValidator annotationValidator;
 
-		@Pointcut("@annotation(edu.mum.ezstore.aspect.annotation.AnnoValidation) && args(object)")
+		@Pointcut("@annotation(edu.mum.ezstore.aspect.annotation.AnnotationValidation) && args(object)")
 		public void save(Object object) {}
 
 		@Before("save(object)")
