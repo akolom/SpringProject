@@ -1,5 +1,7 @@
 package edu.mum.ezstore.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -20,7 +22,8 @@ public class UserCredentials implements Serializable{
 	String password;
 	
 	Boolean enabled;
-	
+
+	@NotEmpty
 	private String authority;
 
 //	private User user;

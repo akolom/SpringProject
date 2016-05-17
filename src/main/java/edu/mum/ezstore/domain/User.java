@@ -36,11 +36,13 @@ public class User implements Serializable {
 	@NotEmpty
 	private String lastName;
 
-	@Min(value = 0, message=)
+	@Min(value = 0, message="{MinValidation}")
 	private int age;
 	private char gender;
 
+	@NotEmpty
 	private List<Address> addressSet = new ArrayList<>();
+
 	private List<Item> itemSet = new ArrayList<>();
 	
 	@Valid
