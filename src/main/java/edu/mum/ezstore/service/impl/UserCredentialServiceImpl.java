@@ -2,6 +2,7 @@ package edu.mum.ezstore.service.impl;
 
 import java.util.List;
 
+import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ public class UserCredentialServiceImpl implements UserCredentialService {
 		return userCredentialsRepository.findAll();
 	}
 
+	@AnnotationValidation
 	public UserCredentials save(UserCredentials usercredentials) {
 		return userCredentialsRepository.save(usercredentials);
 
