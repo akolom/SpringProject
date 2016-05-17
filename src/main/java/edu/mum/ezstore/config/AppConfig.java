@@ -8,20 +8,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * @author Sam
  *
  */
 @Configuration
-@ComponentScan(basePackages={"edu.mum.ezstore.validator","edu.mum.ezstore.service", "edu.mum.ezstore.aspect","edu.mum.ezstore.security"})
+@ComponentScan(basePackages={"edu.mum.ezstore.validator","edu.mum.ezstore.service", "edu.mum.ezstore.security","edu.mum.ezstore.aspect"})
 //		excludeFilters={@ComponentScan.Filter(type=FilterType.ANNOTATION,value=EnableWebMvc.class),
 //				@ComponentScan.Filter(type=FilterType.REGEX,pattern={"edu.mum.ezstore.controller"})})
 @PropertySource(value = {"classpath:application.properties" })

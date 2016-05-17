@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service;
 
 import edu.mum.ezstore.domain.Order;
 import edu.mum.ezstore.repository.OrderRepository;
+import edu.mum.ezstore.service.OrderService;
 
 @Service
 @Transactional
-public class OrderServiceImpl {
+public class OrderServiceImpl implements OrderService{
 
 	@Autowired
 	OrderRepository orderRepository;

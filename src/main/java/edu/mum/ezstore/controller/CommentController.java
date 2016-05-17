@@ -43,5 +43,5 @@ public class CommentController {
     @RequestMapping(value= "/get/{id}", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	public Comment getCommentById(@PathVariable("id") Long id) {
 		return  commentService.findOne(id);
- 
 	}
+}
