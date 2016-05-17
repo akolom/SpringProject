@@ -5,16 +5,16 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
-import edu.mum.ezstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.mum.ezstore.domain.Order;
 import edu.mum.ezstore.repository.OrderRepository;
+import edu.mum.ezstore.service.OrderService;
 
 @Service
 @Transactional
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService{
 
 	@Autowired
 	OrderRepository orderRepository;
