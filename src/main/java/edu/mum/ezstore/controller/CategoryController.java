@@ -41,7 +41,7 @@ public class CategoryController {
 		return new ResponseEntity<>(categories, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/get/{id}")
+	@RequestMapping(value="/get/{id}", method= RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	public Category getCategoryById(@PathVariable("id") Long id){
 		return categoryService.findOne(id);
 	}
