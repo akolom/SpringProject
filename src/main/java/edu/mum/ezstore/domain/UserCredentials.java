@@ -21,7 +21,7 @@ public class UserCredentials implements Serializable{
 	
 	Boolean enabled;
 	
-	private String authorithy;
+	private String authority;
 
 //	private User user;
 	
@@ -56,11 +56,12 @@ public class UserCredentials implements Serializable{
 //	public void setUser(User user) {
 //		this.user = user;
 //	}
-	public String getAuthorithy() {
-		return authorithy;
+	
+	public String getAuthority() {
+		return authority;
 	}
-	public void setAuthorithy(String authorithy) {
-		this.authorithy = authorithy;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
  
  	
