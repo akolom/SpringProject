@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Comment implements Serializable{
@@ -20,7 +21,8 @@ public class Comment implements Serializable{
 	private static final long serialVersionUID = 21215L;
 	
 	private long id;
-	
+
+	@NotEmpty(message="{NotEmpty}")
 	private String comment;
 	
 	@JsonIgnore

@@ -27,10 +27,10 @@ import edu.mum.ezstore.security.RestAuthenticationEntryPoint;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	RestAuthenticationEntryPoint authenticationEntryPoint;
+	private RestAuthenticationEntryPoint authenticationEntryPoint;
 
 	@Autowired
-	RestAuthenticationAccessDeniedHandler restAuthenticationAccessDeniedHandler;
+	private RestAuthenticationAccessDeniedHandler restAuthenticationAccessDeniedHandler;
 
 	@Autowired
 	@Qualifier("userDetailsService")

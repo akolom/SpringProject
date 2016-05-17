@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.JoinColumn;
 
@@ -23,8 +24,13 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 21214L;
 
 	private long id;
+
+	@NotEmpty(message="{NotEmpty}")
 	private String name;
+
+	@NotEmpty (message="{NotEmpty}")
 	private String description;
+
 	private List<Item> items = new ArrayList<Item>();
 
 	@JsonIgnore

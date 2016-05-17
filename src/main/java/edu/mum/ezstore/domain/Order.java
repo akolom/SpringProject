@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,7 +19,11 @@ public class Order implements Serializable {
 	private static final long serialVersionUID = 21216L;
 
 	private long id;
+
+	@NotNull
 	private User buyer;
+
+	@NotNull
 	private Item item;
 
 	@JsonIgnore

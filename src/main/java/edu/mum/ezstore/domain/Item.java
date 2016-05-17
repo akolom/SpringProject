@@ -16,14 +16,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Item implements Serializable {
 	private static final long serialVersionUID = 21216L;
 
 	private long id;
+	@NotEmpty(message="{NotEmpty}")
 	private String name;
+	@NotEmpty (message="{NotEmpty}")
 	private String description;
+
 	private double price;
 	private User seller;
 	private Set<Category> categories = new HashSet<Category>();

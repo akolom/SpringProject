@@ -16,11 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class User implements Serializable {
@@ -28,10 +29,14 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 21212L;
 
 	private long id;
-	@Size(min=2, message="{Size.character.validation}")
+
+	@NotEmpty
 	private String firstName;
+
+	@NotEmpty
 	private String lastName;
 
+	@Min(value = 0, message=)
 	private int age;
 	private char gender;
 
