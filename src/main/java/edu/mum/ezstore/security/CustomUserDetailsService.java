@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.mum.ezstore.service;
+package edu.mum.ezstore.security;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.ezstore.domain.UserCredentials;
+import edu.mum.ezstore.service.UserCredentialService;
 
 /**
  * @author Sam

@@ -75,72 +75,6 @@ public class RestJsonExceptionResolver extends AbstractHandlerExceptionResolver 
 	public void setMessageSource(MessageSource msgSource){
 		this.messageSource=msgSource;
 	}
-	// @Override
-	// protected ModelAndView doResolveException(HttpServletRequest request,
-	// HttpServletResponse response, Object handler,
-	// Exception e) {
-	// ModelAndView mav = new ModelAndView(this);
-	// RestError error = new RestError();
-	//
-	// if (e != null) {
-	// error.setMessageOriginal(e.getLocalizedMessage());
-	// // Every JRestError will have a message
-	// error.setMessage(e.getLocalizedMessage());
-	//
-	// // Only BusinessExceptions have possible errorCodes
-	// if (e instanceof BusinessException) {
-	// error.setErrorCode(((BusinessException) e).getErrorCode());
-	// } else if (e instanceof AuthenticationException &&
-	// ((AuthenticationException) e).getErrorCode() != 0) {
-	// // Differentiate errorCode when login failed, invalid-account,
-	// // or not active, this can be set base on project
-	// error.setErrorCode(((AuthenticationException) e).getErrorCode());
-	// }
-	//
-	// // Set HTTP error code. If we don't have this Exception type
-	// // registered, then we will provide a
-	// // diagnostic and error id.
-	// Integer httpCode = httpErrorCodeMap.get(e.getClass().getName());
-	// if (httpCode == null) {
-	// httpCode = 500;
-	//
-	// StackTraceElement[] trace = null;
-	// StringBuilder sb = new StringBuilder();
-	//
-	// if (e.getCause() == null) {
-	// trace = e.getStackTrace();
-	// sb.append("Exception - ").append(e.getClass().getName());
-	// sb.append("\r\nStack -\r\n");
-	// } else {
-	// trace = e.getCause().getStackTrace();
-	// sb.append("\r\nException Cause -\r\n");
-	// }
-	//
-	// for (int i = 0; i < trace.length; i++) {
-	// sb.append("\r\n\tat ").append(trace[i].toString());
-	// }
-	// error.setDiagnosticOriginal(sb.toString());
-	//
-	// if (!diagnosticsDisabled) {
-	// error.setDiagnostic(sb.toString());
-	// }
-	//
-	// }
-	// // check if errorCode is specified, take original message do not
-	// // override
-	// if (error.getErrorCode() != null && error.getErrorCode() != 0) {
-	// error.setMessage(e.getLocalizedMessage());
-	// }
-	// error.setHttpCode(httpCode);
-	// } else {
-	// error.setMessage("Unknown error");
-	// error.setHttpCode(500);
-	// }
-	//
-	// mav.addObject(KEY_ERROR_OBJECT, error);
-	// LOG.error("Error {}", error);
-	// return mav;
-	// }
 
 	@Override
 	protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
@@ -196,6 +130,7 @@ public class RestJsonExceptionResolver extends AbstractHandlerExceptionResolver 
 //		addHandlerTo(map, HttpMessageNotWritableException.class, INTERNAL_SERVER_ERROR);
 //		addHandlerTo(map, MissingServletRequestPartException.class, BAD_REQUEST);
 		addHandlerTo(map, UnknownResourceException.class, NOT_FOUND);
+		addHandlerTo(map, AuthorizationException.class, FORBIDDEN);
 		addHandlerTo(map, Exception.class, INTERNAL_SERVER_ERROR);
 
 		// this class didn't exist before Spring 4.0
