@@ -2,8 +2,6 @@ package edu.mum.ezstore.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,35 +15,37 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.mum.ezstore.domain.User;
 import edu.mum.ezstore.service.UserService;
 
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
-	
-    @Autowired
-    private UserService userService;
 
-    @RequestMapping(value="/add", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	@Autowired
+	private UserService userService;
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> createUser(@RequestBody User user) {
-		User savedUser = userService.save(user);
+
+		User savedUser;
+		savedUser = userService.save(user);
+
 		return new ResponseEntity<User>(savedUser, HttpStatus.CREATED);
 	}
-    
-    @RequestMapping(value="/update", method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(value = "/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
-    	User savedUser = userService.save(user);
+		User savedUser = userService.save(user);
 		return new ResponseEntity<User>(savedUser, HttpStatus.OK);
 	}
-    
-    @RequestMapping(value = "/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users=userService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);    
-    }
-    
-    @RequestMapping("/get/{id}")
+
+	@RequestMapping(value = "/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<User>> getAllUsers() {
+		List<User> users = userService.findAll();
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+
+	@RequestMapping("/get/{id}")
 	public User getUserById(@PathVariable("id") Long id) {
-		return  userService.findOne(id);
- 
+		return userService.findOne(id);
+
 	}
 }

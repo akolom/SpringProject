@@ -39,6 +39,19 @@ public class RestError implements Serializable {
 	@JsonIgnore
 	private String diagnosticOriginal;
 
+	public RestError() {
+	
+	}
+	public RestError(RestError error) {
+		super();
+		this.type = error.getType();
+		this.httpCode = error.getHttpCode();
+		this.title = error.getTitle();
+		this.errorCode = error.getErrorCode();
+		this.message = error.getMessage();
+		this.diagnostic = error.getDiagnostic();
+	}
+
 	public URI getType() {
 		return type;
 	}
