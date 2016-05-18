@@ -38,7 +38,7 @@ public class OrderController {
 	public ResponseEntity<ItemOrder> createOrder(@RequestBody ItemOrder itemOrder) {
 
 		Item item = itemService.findOne(itemOrder.getItem().getId());
-		if (item == null) throw new ObjectNotFoundException();
+		if (item == null) throw new ObjectNotFoundException("itemId:"+itemOrder.getItem().getId());
 
 		if (item.getItemOrder() != null) throw new BusinessException("Item is already sold");
 
@@ -75,7 +75,7 @@ public class OrderController {
 	@RequestMapping("/order/get/{id}")
    	public ItemOrder getOrderById(@PathVariable("id") Long id) {
 		   ItemOrder itemOrder=orderService.findOne(id);
-		if (itemOrder==null) throw new ObjectNotFoundException();
+		if (itemOrder==null) throw new ObjectNotFoundException("orderId:"+id);
    		return  itemOrder;
     
 	}
@@ -83,7 +83,7 @@ public class OrderController {
 	@RequestMapping(value = "/admin/order/getorder/{userName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ItemOrder>> getOrderByBuyer(@PathVariable("userName") String userName) {
 		User user = userService.findByUserName(userName);
-		if (user == null) throw new ObjectNotFoundException();
+		if (user == null) throw new ObjectNotFoundException(userName);
 		List<ItemOrder> itemOrders = orderService.findByBuyer(user);
 		return new ResponseEntity<>(itemOrders, HttpStatus.OK);
 	}
