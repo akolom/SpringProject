@@ -50,7 +50,7 @@ public class User implements Serializable {
 	@Valid
 	@NotNull
 	private UserCredentials userCredentials;
-	private Set<Comment> commentSet = new HashSet<>();
+	private Set<Comment> comments = new HashSet<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -125,13 +125,13 @@ public class User implements Serializable {
 		this.userCredentials = userCredentials;
 	}
 
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "toUser")
-	public Set<Comment> getCommentSet() {
-		return commentSet;
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "toUser")
+	public Set<Comment> getComments() {
+		return comments;
 	}
 
-	public void setCommentSet(Set<Comment> commentSet) {
-		this.commentSet = commentSet;
+	public void setComments(Set<Comment> commentSet) {
+		this.comments = commentSet;
 	}
 }
