@@ -4,17 +4,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -33,7 +26,6 @@ public class Item implements Serializable {
 	private Set<Category> categories = new HashSet<Category>();
 	private Order order;
 
-	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getId() {
@@ -69,7 +61,7 @@ public class Item implements Serializable {
 	}
 
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "seller_id")
 	public User getSeller() {
 		return seller;
@@ -79,8 +71,10 @@ public class Item implements Serializable {
 		this.seller = seller;
 	}
 
-	@JsonIgnore
-	@ManyToMany(mappedBy = "items")
+	@JsonBackReference
+	@ManyToMany
+	@JoinTable( name="Item_Category", joinColumns={@JoinColumn(name="Item_Id")},
+			inverseJoinColumns={ @JoinColumn(name="Category_Id")} )
 	public Set<Category> getCategories() {
 		return categories;
 	}
@@ -90,7 +84,7 @@ public class Item implements Serializable {
 	}
 
 	@JsonIgnore
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id")
 	public Order getOrder() {
 		return order;

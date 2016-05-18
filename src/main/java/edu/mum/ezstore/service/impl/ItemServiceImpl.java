@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
+import edu.mum.ezstore.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,17 @@ public class ItemServiceImpl implements ItemService {
 	public Item save(Item item){
 		return itemRepository.save(item);
 	}
-	public Item findone(Long id){
+
+	public Item findOne(Long id){
 		return itemRepository.findOne(id);
+	}
+
+	@Override
+	public List<Item> findByUser(User user) {
+		return itemRepository.findBySeller(user);
+	}
+
+	public List<Item> findByCategory(Long id) {
+		return itemRepository.findByCategory(id);
 	}
 }
