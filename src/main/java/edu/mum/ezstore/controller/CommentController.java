@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,17 +14,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.mum.ezstore.domain.Comment;
+import edu.mum.ezstore.domain.User;
 import edu.mum.ezstore.service.CommentService;
+import edu.mum.ezstore.service.UserService;
 
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
 	
 	@Autowired
+	UserService userService;
+	
+	@Autowired
 	CommentService commentService;
 	
-	@RequestMapping(value="add", method= RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/add", method= RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Comment> createComment(@RequestBody Comment comment){
+		// setting fromuser as logedin user
+		User currentUser = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		comment.setFromUser(currentUser);
+		
 		Comment savedComment = commentService.save(comment);
 		return new ResponseEntity<Comment>(savedComment, HttpStatus.CREATED);
 	}
