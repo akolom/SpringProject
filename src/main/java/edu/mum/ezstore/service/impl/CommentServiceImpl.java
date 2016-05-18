@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.egen.exhandle.exception.ObjectNotFoundException;
 import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,9 @@ public class CommentServiceImpl implements CommentService {
 		return commentRepository.save(comment);
 	}
 	public Comment findOne(Long id){
-		return commentRepository.findOne(id);
+		Comment comment = commentRepository.findOne(id);
+		if (comment == null) throw new ObjectNotFoundException("Comment Id: " + id);
+		return comment;
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.egen.exhandle.exception.ObjectNotFoundException;
 import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,15 +27,12 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@AnnotationValidation
 	public Category save(Category category){
-		
 		return categoryRepository.save(category);
 	}
-	public Category findOne(Long id){
-		return categoryRepository.findOne(id);
-	}
 
-	@Override
-	public Category getOne(Long id) {
-		return categoryRepository.getOne(id);
+	public Category findOne(Long id){
+		Category category=categoryRepository.findOne(id);
+		if (category == null) throw new ObjectNotFoundException("Category Id: " + id);
+		return category;
 	}
 }

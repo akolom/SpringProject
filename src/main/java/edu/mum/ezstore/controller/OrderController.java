@@ -36,20 +36,12 @@ public class OrderController {
 
     @RequestMapping(value="/order/add", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ItemOrder> createOrder(@RequestBody ItemOrder itemOrder) {
-
-		Item item = itemService.findOne(itemOrder.getItem().getId());
-		if (item == null) throw new ObjectNotFoundException("itemId:"+itemOrder.getItem().getId());
-
-		if (item.getItemOrder() != null) throw new BusinessException("Item is already sold");
-
-		User buyer = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		// check if logged in user is existed or not (buyer is the logged in user)
+		String strBuyerUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+		User buyer = userService.findByUserName(strBuyerUserName);
 		itemOrder.setBuyer(buyer);
 
 		ItemOrder savedItemOrder = orderService.save(itemOrder);
-
-		item.setItemOrder(savedItemOrder);
-		itemService.save(item);
-
 		return new ResponseEntity<ItemOrder>(savedItemOrder, HttpStatus.CREATED);
 	}
     
@@ -74,8 +66,7 @@ public class OrderController {
 
 	@RequestMapping("/order/get/{id}")
    	public ItemOrder getOrderById(@PathVariable("id") Long id) {
-		   ItemOrder itemOrder=orderService.findOne(id);
-		if (itemOrder==null) throw new ObjectNotFoundException("orderId:"+id);
+		ItemOrder itemOrder=orderService.findOne(id);
    		return  itemOrder;
     
 	}
@@ -83,7 +74,6 @@ public class OrderController {
 	@RequestMapping(value = "/admin/order/getorder/{userName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ItemOrder>> getOrderByBuyer(@PathVariable("userName") String userName) {
 		User user = userService.findByUserName(userName);
-		if (user == null) throw new ObjectNotFoundException(userName);
 		List<ItemOrder> itemOrders = orderService.findByBuyer(user);
 		return new ResponseEntity<>(itemOrders, HttpStatus.OK);
 	}

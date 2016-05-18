@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.egen.exhandle.exception.ObjectNotFoundException;
 import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,10 +30,14 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public User findOne(Long id){
-		return userRepository.findOne(id);
+		User user = userRepository.findOne(id);
+		if (user == null) throw new ObjectNotFoundException("User id: " + id);
+		return user;
 	}
 
 	public User findByUserName(String userName) {
-		return userRepository.findByUserName(userName);
+		User user = userRepository.findByUserName(userName);
+		if (user == null) throw new ObjectNotFoundException("Username: " + userName);
+		return user;
 	}
 }

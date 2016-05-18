@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.egen.exhandle.exception.ObjectNotFoundException;
 import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
 import edu.mum.ezstore.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,9 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	public Item findOne(Long id){
-		return itemRepository.findOne(id);
+		Item item = itemRepository.findOne(id);
+		if(item==null) throw new ObjectNotFoundException("itemId:"+id);
+		return item;
 	}
 
 	@Override

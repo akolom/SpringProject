@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.egen.exhandle.exception.AuthorizationException;
 import com.egen.exhandle.exception.ObjectNotFoundException;
+import edu.mum.ezstore.domain.Category;
 import edu.mum.ezstore.domain.User;
 import edu.mum.ezstore.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class ItemController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private CategoryService categoryService;
+
     @RequestMapping(value="/item/add", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Item> createItem(@RequestBody Item item) {
 		User currentUser = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -46,7 +50,6 @@ public class ItemController {
 		item.setSeller(currentUser);
 
 		Item itemOld = itemService.findOne(item.getId());
-		if (itemOld == null) throw new ObjectNotFoundException("itemId"+item.getId());
 
 		if (itemOld.getSeller().getId() != currentUser.getId())
 			throw new AuthorizationException();
@@ -64,7 +67,6 @@ public class ItemController {
     @RequestMapping("/item/get/{id}")
 	public Item getItemById(@PathVariable("id") Long id) {
 		Item item=itemService.findOne(id);
-		if(item==null) throw new ObjectNotFoundException("itemId:"+id);
 		return item;
 	}
 
@@ -78,14 +80,14 @@ public class ItemController {
 	@RequestMapping(value = "/admin/item/getitem/{userName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Item>> getItemBySeller(@PathVariable("userName") String userName) {
 		User user = userService.findByUserName(userName);
-		if (user == null) throw new ObjectNotFoundException(userName);
 		List<Item> items = itemService.findByUser(user);
 		return new ResponseEntity<>(items, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/item/getbycategory/{catId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Item>> getItemsByCategory(@PathVariable("catId") Long catId) {
-		List<Item> items = itemService.findByCategory(catId);
+		Category category = categoryService.findOne(catId);
+		List<Item> items = itemService.findByCategory(category.getId());
 		return new ResponseEntity<>(items, HttpStatus.OK);
 	}
 }

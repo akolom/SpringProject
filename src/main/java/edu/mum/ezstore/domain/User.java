@@ -50,7 +50,6 @@ public class User implements Serializable {
 	private UserCredentials userCredentials;
 	private Set<Comment> commentSet = new HashSet<>();
 
-	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getId() {

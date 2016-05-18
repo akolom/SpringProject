@@ -47,8 +47,7 @@ public class UserController {
 
 	@RequestMapping("/get/{id}")
 	public User getUserById(@PathVariable("id") Long id) {
-		User user=userService.findOne(id);
-		if(user==null) throw new ObjectNotFoundException("userId:"+id);
+		User user = userService.findOne(id);
 		return userService.findOne(id);
 
 	}

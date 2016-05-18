@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.egen.exhandle.exception.ObjectNotFoundException;
 import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,10 @@ public class AddressServiceImpl implements AddressService {
 	public Address save(Address address){
 		return addressRepository.save(address);
 	}
+
 	public Address findOne(Long id){
-		return addressRepository.findOne(id);
+		Address address = addressRepository.findOne(id);
+		if (address == null) throw new ObjectNotFoundException("Address Id: " + id);
+		return address;
 	}
 }
