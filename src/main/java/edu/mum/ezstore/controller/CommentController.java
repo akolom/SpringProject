@@ -40,7 +40,11 @@ public class CommentController {
 
 	@RequestMapping(value="/update", method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Comment> updateComment(@RequestBody Comment comment) {
-		Comment savedComment = commentService.save(comment);
+		User currentUser = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+
+		comment.setFromUser(currentUser);
+
+		Comment savedComment = commentService.update(comment);
 		return new ResponseEntity<Comment>(savedComment, HttpStatus.OK);
 	}
     
