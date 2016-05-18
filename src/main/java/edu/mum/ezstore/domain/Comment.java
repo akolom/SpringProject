@@ -24,8 +24,7 @@ public class Comment implements Serializable{
 
 	@NotEmpty(message="{NotEmpty}")
 	private String comment;
-	
-	@JsonIgnore
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public long getId() {

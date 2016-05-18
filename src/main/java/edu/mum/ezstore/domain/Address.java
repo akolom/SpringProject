@@ -46,7 +46,6 @@ public class Address implements Serializable {
 	public Address() {
 	}
 
-	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getId() {
