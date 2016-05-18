@@ -29,9 +29,12 @@ public class AnnotationValidator {
 		System.out.println("DOING Validation! Object:" + object.getClass().getName());
 
 		Errors errors = new BeanPropertyBindingResult(object, object.getClass().getName());
-
 		validator.validate(object, errors);
-
+		
+		Validator customValidator=ValidatorFactory.getInstance().getValidator(object.getClass().getSimpleName());
+		if(customValidator!=null)
+			customValidator.validate(object, errors);
+		
 		if (errors.hasErrors()) {
 			List<FieldError> fieldErrors = errors.getFieldErrors();
 			
