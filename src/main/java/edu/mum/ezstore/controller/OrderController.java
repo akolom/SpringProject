@@ -2,47 +2,89 @@ package edu.mum.ezstore.controller;
 
 import java.util.List;
 
+import com.egen.exhandle.exception.BusinessException;
+import com.egen.exhandle.exception.ObjectNotFoundException;
+import edu.mum.ezstore.domain.Item;
+import edu.mum.ezstore.domain.User;
+import edu.mum.ezstore.service.ItemService;
+import edu.mum.ezstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.mum.ezstore.domain.Order;
+import edu.mum.ezstore.domain.ItemOrder;
 import edu.mum.ezstore.service.OrderService;
 
 @RestController
-@RequestMapping("/order")
 public class OrderController {
 
 	@Autowired
-    private OrderService OrderService;
+    private OrderService orderService;
 
-    @RequestMapping(value="/add", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-		Order savedOrder = OrderService.save(order);
-		return new ResponseEntity<Order>(savedOrder, HttpStatus.CREATED);
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private ItemService itemService;
+
+    @RequestMapping(value="/order/add", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ItemOrder> createOrder(@RequestBody ItemOrder itemOrder) {
+
+		Item item = itemService.findOne(itemOrder.getItem().getId());
+		if (item == null) throw new ObjectNotFoundException();
+
+		if (item.getItemOrder() != null) throw new BusinessException("Item is already sold");
+
+		User buyer = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		itemOrder.setBuyer(buyer);
+
+		ItemOrder savedItemOrder = orderService.save(itemOrder);
+
+		item.setItemOrder(savedItemOrder);
+		itemService.save(item);
+
+		return new ResponseEntity<ItemOrder>(savedItemOrder, HttpStatus.CREATED);
 	}
     
-    @RequestMapping(value="/update", method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_VALUE)
-   	public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
-       	Order savedOrder = OrderService.save(order);
-   		return new ResponseEntity<Order>(savedOrder, HttpStatus.OK);
-   	}
+//    @RequestMapping(value="/update", method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_VALUE)
+//   	public ResponseEntity<ItemOrder> updateOrder(@RequestBody ItemOrder itemOrder) {
+//       	ItemOrder savedItemOrder = orderService.save(itemOrder);
+//   		return new ResponseEntity<ItemOrder>(savedItemOrder, HttpStatus.OK);
+//   	}
        
-       @RequestMapping(value = "/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-       public ResponseEntity<List<Order>> getAllOrders() {
-           List<Order> orders=OrderService.findAll();
-           return new ResponseEntity<>(orders, HttpStatus.OK);    
-       }
-       
-       @RequestMapping("/get/{id}")
-   	public Order getOrderById(@PathVariable("id") Long id) {
-   		return  OrderService.findOne(id);
+   @RequestMapping(value = "/order/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<List<ItemOrder>> getAllOrders() {
+	   List<ItemOrder> itemOrders =orderService.findAll();
+	   return new ResponseEntity<>(itemOrders, HttpStatus.OK);
+   }
+
+	@RequestMapping(value = "/order/getmyorder", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ItemOrder>> getMyOrders() {
+		User currentUser = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		List<ItemOrder> itemOrders = orderService.findByBuyer(currentUser);
+		return new ResponseEntity<>(itemOrders, HttpStatus.OK);
+	}
+
+	@RequestMapping("/order/get/{id}")
+   	public ItemOrder getOrderById(@PathVariable("id") Long id) {
+		   ItemOrder itemOrder=orderService.findOne(id);
+		if (itemOrder==null) throw new ObjectNotFoundException();
+   		return  itemOrder;
     
-       } 
+	}
+
+	@RequestMapping(value = "/admin/order/getorder/{userName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ItemOrder>> getOrderByBuyer(@PathVariable("userName") String userName) {
+		User user = userService.findByUserName(userName);
+		if (user == null) throw new ObjectNotFoundException();
+		List<ItemOrder> itemOrders = orderService.findByBuyer(user);
+		return new ResponseEntity<>(itemOrders, HttpStatus.OK);
+	}
 }

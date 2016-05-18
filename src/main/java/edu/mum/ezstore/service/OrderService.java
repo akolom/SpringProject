@@ -2,12 +2,13 @@ package edu.mum.ezstore.service;
 
 import java.util.List;
 
-import edu.mum.ezstore.domain.Order;
+import edu.mum.ezstore.domain.ItemOrder;
 import edu.mum.ezstore.domain.User;
 
 public interface OrderService {
+	public List<ItemOrder> findAll();
+	public ItemOrder save(ItemOrder itemOrder);
+	public ItemOrder findOne(Long order_ID);
+	public List<ItemOrder> findByBuyer(User buyer);
 
-	public List<Order> findAll();
-	public Order save(Order order);
-	public Order findOne(Long order_ID);	
 }

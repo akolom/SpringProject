@@ -5,10 +5,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
+import edu.mum.ezstore.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.mum.ezstore.domain.Order;
+import edu.mum.ezstore.domain.ItemOrder;
 import edu.mum.ezstore.repository.OrderRepository;
 import edu.mum.ezstore.service.OrderService;
 
@@ -19,15 +20,20 @@ public class OrderServiceImpl implements OrderService{
 	@Autowired
 	OrderRepository orderRepository;
 	
-	public List<Order> findAll(){
+	public List<ItemOrder> findAll(){
 		return orderRepository.findAll();
 	}
 
 	@AnnotationValidation
-	public Order save(Order order){
-		return orderRepository.save(order);
+	public ItemOrder save(ItemOrder itemOrder){
+		return orderRepository.save(itemOrder);
 	}
-	public Order findOne(Long order_ID){
+	public ItemOrder findOne(Long order_ID){
 		return orderRepository.findOne(order_ID);
+	}
+
+	@Override
+	public List<ItemOrder> findByBuyer(User buyer) {
+		return orderRepository.findByBuyer(buyer);
 	}
 }

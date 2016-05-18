@@ -12,10 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Order implements Serializable {
+public class ItemOrder implements Serializable {
 	private static final long serialVersionUID = 21216L;
 
 	private long id;
@@ -26,7 +27,6 @@ public class Order implements Serializable {
 	@NotNull
 	private Item item;
 
-	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getId() {
@@ -39,8 +39,7 @@ public class Order implements Serializable {
 
 	private double price;
 
-	@JsonIgnore
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "buyer_id")
 	public User getBuyer() {
 		return buyer;
@@ -50,8 +49,7 @@ public class Order implements Serializable {
 		this.buyer = buyer;
 	}
 
-	@JsonIgnore
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "item_id")
 	public Item getItem() {
 		return item;

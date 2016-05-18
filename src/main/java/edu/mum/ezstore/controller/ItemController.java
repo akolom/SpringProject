@@ -80,7 +80,7 @@ public class ItemController {
 	}
 
 	@RequestMapping(value = "/admin/item/getitem/{userName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Item>> getMyItems(@PathVariable("userName") String userName) {
+	public ResponseEntity<List<Item>> getItemBySeller(@PathVariable("userName") String userName) {
 		User user = userService.findByUserName(userName);
 		if (user == null) throw new ObjectNotFoundException();
 		List<Item> items = itemService.findByUser(user);

@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,7 +23,7 @@ public class Item implements Serializable {
 	private double price;
 	private User seller;
 	private Set<Category> categories = new HashSet<Category>();
-	private Order order;
+	private ItemOrder itemOrder;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -86,11 +85,11 @@ public class Item implements Serializable {
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id")
-	public Order getOrder() {
-		return order;
+	public ItemOrder getItemOrder() {
+		return itemOrder;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setItemOrder(ItemOrder itemOrder) {
+		this.itemOrder = itemOrder;
 	}
 }

@@ -132,6 +132,7 @@ public class RestJsonExceptionResolver extends AbstractHandlerExceptionResolver 
 		addHandlerTo(map, ObjectNotFoundException.class, NOT_FOUND);
 		addHandlerTo(map, UnknownResourceException.class, NOT_FOUND);
 		addHandlerTo(map, AuthorizationException.class, FORBIDDEN);
+		addHandlerTo(map, BusinessException.class, INTERNAL_SERVER_ERROR);
 		addHandlerTo(map, Exception.class, INTERNAL_SERVER_ERROR);
 
 		// this class didn't exist before Spring 4.0
