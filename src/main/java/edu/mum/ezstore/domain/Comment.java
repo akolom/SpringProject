@@ -12,7 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -53,7 +55,7 @@ public class Comment implements Serializable{
 	}
 	
 	@JsonIgnore
-	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
+	@OneToOne(fetch=FetchType.EAGER)
  	@JoinColumn(name="fromUser_id") 
 	public User getFromUser() {
 		return fromUser;
@@ -62,8 +64,8 @@ public class Comment implements Serializable{
 		this.fromUser = fromUser;
 	}
 
-	@JsonIgnore
-	@OneToOne(fetch=FetchType.EAGER,  cascade = CascadeType.ALL) 
+	@JsonBackReference
+	@OneToOne(fetch=FetchType.EAGER)
  	@JoinColumn(name="toUser_id") 
 	public User getToUser() {
 		return toUser;
