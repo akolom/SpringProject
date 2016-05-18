@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.accessDeniedHandler(restAuthenticationAccessDeniedHandler)
 			.and()
 			.authorizeRequests()
-			.antMatchers("/api/user/**").access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')")
 			.anyRequest().authenticated()
 			.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
