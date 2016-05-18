@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,9 +40,9 @@ public class Address implements Serializable {
 
 	@Pattern(regexp="^\\d{5}?$",message="{ZipcodeValidation}")
 	private String zip;
-	
+
 	private User user;
-	
+
 	public Address() {
 	}
 
@@ -54,9 +56,9 @@ public class Address implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	public User getUser() {
 		return user;

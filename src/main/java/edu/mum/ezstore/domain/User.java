@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -40,8 +41,9 @@ public class User implements Serializable {
 	private int age;
 	private char gender;
 
+	@Valid
 	@NotEmpty
-	private List<Address> addressSet = new ArrayList<>();
+	private List<Address> address = new ArrayList<>();
 
 	private List<Item> itemSet = new ArrayList<>();
 	
@@ -92,14 +94,14 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
 	public List<Address> getAddress() {
-		return addressSet;
+		return address;
 	}
 
 	public void setAddress(List<Address> addressSet) {
-		this.addressSet = addressSet;
+		this.address = addressSet;
 	}
 
 	@JsonIgnore
@@ -121,10 +123,6 @@ public class User implements Serializable {
 
 	public void setUserCredentials(UserCredentials userCredentials) {
 		this.userCredentials = userCredentials;
-	}
-
-	public void addAdress(Address address) {
-		this.addressSet.add(address);
 	}
 
 	@JsonIgnore

@@ -27,8 +27,7 @@ public class UserController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 
-		User savedUser;
-		savedUser = userService.save(user);
+		User savedUser = userService.save(user);
 
 		return new ResponseEntity<User>(savedUser, HttpStatus.CREATED);
 	}
@@ -48,7 +47,7 @@ public class UserController {
 	@RequestMapping("/get/{id}")
 	public User getUserById(@PathVariable("id") Long id) {
 		User user = userService.findOne(id);
-		return userService.findOne(id);
+		return user;
 
 	}
 }

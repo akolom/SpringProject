@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import com.egen.exhandle.exception.ObjectNotFoundException;
 import edu.mum.ezstore.aspect.annotation.AnnotationValidation;
+import edu.mum.ezstore.domain.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,12 @@ public class UserServiceImpl implements UserService {
 
 	@AnnotationValidation
 	public User save(User user) {
+		for (Address address : user.getAddress()){
+			address.setUser(user);
+		}
 		return userRepository.save(user);
 	}
-	
+
 	public User findOne(Long id){
 		User user = userRepository.findOne(id);
 		if (user == null) throw new ObjectNotFoundException("User id: " + id);
