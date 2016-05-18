@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -33,7 +34,6 @@ public class Category implements Serializable {
 
 	private List<Item> items = new ArrayList<Item>();
 
-	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getId() {
@@ -65,9 +65,7 @@ public class Category implements Serializable {
 	}
 
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable ( name="Category_Item", joinColumns={@JoinColumn(name="Category_ID")},  
-    inverseJoinColumns={ @JoinColumn(name="Item_ID")} )
+	@ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
 	public List<Item> getItems() {
 		return items;
 	}
