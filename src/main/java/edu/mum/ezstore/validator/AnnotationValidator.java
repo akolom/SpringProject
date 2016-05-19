@@ -34,7 +34,7 @@ public class AnnotationValidator {
 		Validator customValidator=ValidatorFactory.getInstance().getValidator(object.getClass().getSimpleName());
 		if(customValidator!=null)
 			customValidator.validate(object, errors);
-		
+
 		if (errors.hasErrors()) {
 			List<FieldError> fieldErrors = errors.getFieldErrors();
 			

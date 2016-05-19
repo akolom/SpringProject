@@ -44,4 +44,9 @@ public class ItemServiceImpl implements ItemService {
 	public List<Item> findByCategory(Long id) {
 		return itemRepository.findByCategory(id);
 	}
+
+	@Override
+	public List<Item> findByName(String name) {
+		return itemRepository.findByName(name);
+	}
 }

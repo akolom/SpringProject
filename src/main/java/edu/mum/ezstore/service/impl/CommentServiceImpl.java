@@ -55,8 +55,8 @@ public class CommentServiceImpl implements CommentService {
 
 		// check if toUser is changed or not
 		if (oldComment.getToUser().getId() != comment.getToUser().getId()){
-			throw new BusinessException("Cannot changed ToUser");
-		}
+			throw new BusinessException("Cannot change ToUser to another user");
+	}
 
 		//insert the comment date
 		Date date = new Date();

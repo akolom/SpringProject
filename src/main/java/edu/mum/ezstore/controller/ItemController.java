@@ -90,4 +90,10 @@ public class ItemController {
 		List<Item> items = itemService.findByCategory(category.getId());
 		return new ResponseEntity<>(items, HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/item/searchbyname/{itemName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Item>> getItemByName(@PathVariable("itemName") String itemName) {
+		List<Item> items = itemService.findByName(itemName);
+		return new ResponseEntity<>(items, HttpStatus.OK);
+	}
 }

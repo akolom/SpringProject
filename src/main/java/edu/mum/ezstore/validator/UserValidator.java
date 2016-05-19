@@ -38,10 +38,14 @@ public class UserValidator implements Validator {
 		User user = (User) target;
 		UserCredentials ucInUser=user.getUserCredentials();
 		if(ucInUser.getUsername()!=null && !StringUtils.isEmpty(ucInUser.getUsername())){
+
 			UserCredentials userCredential=userCredentialRepository.findOne(ucInUser.getUsername());
-			if(userCredential!=null){
-				errors.rejectValue("userCredentials.username","userCredentials.username.duplicate","Duplication error!");
-	//			errors.reject("userCredentials.username.duplicate", messageAccessor.getMessage("userCredentials.username.duplicate"));
+			if(userCredential != null ){
+				User existedUser = userService.findByUserName(ucInUser.getUsername());
+				if (existedUser.getId() != user.getId()) {
+					errors.rejectValue("userCredentials.username","userCredentials.username.duplicate","Duplication error!");
+					//errors.reject("userCredentials.username.duplicate", messageAccessor.getMessage("userCredentials.username.duplicate"));
+				}
 			}
 		}
 	}

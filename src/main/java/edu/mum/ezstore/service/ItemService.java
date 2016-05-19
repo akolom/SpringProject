@@ -12,6 +12,7 @@ public interface ItemService {
 	public Item findOne(Long id);
 	public List<Item> findByUser(User user);
 	public List<Item> findByCategory(Long id);
+	public List<Item> findByName(String name);
 
 
 }
