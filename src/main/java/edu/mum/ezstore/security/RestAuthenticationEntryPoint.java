@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.mum.ezstore.config.rest.RestError;
 
 /**
- * This entry point is called once the request missing their authentication.
+ * This entry point is called once the request missing their authentication in header.
  * 
  * @author Sam
  * 

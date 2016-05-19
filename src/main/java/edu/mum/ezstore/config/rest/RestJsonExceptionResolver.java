@@ -131,6 +131,7 @@ public class RestJsonExceptionResolver extends AbstractHandlerExceptionResolver 
 //		addHandlerTo(map, MissingServletRequestPartException.class, BAD_REQUEST);
 		addHandlerTo(map, ObjectNotFoundException.class, NOT_FOUND);
 		addHandlerTo(map, UnknownResourceException.class, NOT_FOUND);
+		addHandlerTo(map, AuthenticationException.class, UNAUTHORIZED);
 		addHandlerTo(map, AuthorizationException.class, FORBIDDEN);
 		addHandlerTo(map, BusinessException.class, INTERNAL_SERVER_ERROR);
 		addHandlerTo(map, Exception.class, INTERNAL_SERVER_ERROR);

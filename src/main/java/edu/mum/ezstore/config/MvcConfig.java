@@ -58,7 +58,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter{
 	/** Register RestJsonExceptionResolver */
 	@Override
     public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-//		exceptionResolvers.add(exceptionHandlerExceptionResolver() ); // resolves @ExceptionHandler
+		// resolves @ExceptionHandler first
+		exceptionResolvers.add(exceptionHandlerExceptionResolver() ); 
+		// then resolves using restJsonExceptionResolver
 		exceptionResolvers.add(restJsonExceptionResolver());
     }
 
