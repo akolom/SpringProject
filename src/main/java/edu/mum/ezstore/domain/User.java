@@ -22,6 +22,8 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -52,6 +54,7 @@ public class User implements Serializable {
 	private UserCredentials userCredentials;
 	private Set<Comment> comments = new HashSet<>();
 
+	public User(){}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getId() {
@@ -94,12 +97,12 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
-	@JsonManagedReference
+	@JsonManagedReference // forward reference, serialized
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
 	public List<Address> getAddress() {
 		return address;
 	}
-
+	
 	public void setAddress(List<Address> addressSet) {
 		this.address = addressSet;
 	}
@@ -125,12 +128,12 @@ public class User implements Serializable {
 		this.userCredentials = userCredentials;
 	}
 
-	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "toUser")
+	@JsonIgnore //ignore for serialize
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "toUser")
 	public Set<Comment> getComments() {
 		return comments;
 	}
-
+	@JsonProperty //enable for deserialize
 	public void setComments(Set<Comment> commentSet) {
 		this.comments = commentSet;
 	}

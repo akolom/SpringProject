@@ -2,7 +2,6 @@ package edu.mum.ezstore.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,16 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Address implements Serializable {
@@ -56,7 +51,7 @@ public class Address implements Serializable {
 		this.id = id;
 	}
 
-	@JsonBackReference
+	@JsonBackReference // backward reference, not serialized
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	public User getUser() {

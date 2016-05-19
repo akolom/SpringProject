@@ -3,7 +3,7 @@ DELETE FROM `UserCredentials`;
 DELETE FROM `Address`;
 DELETE FROM `Item`;
 DELETE FROM `Category`;
-DELETE FROM `item_category`;
+DELETE FROM `Item_Category`;
 
 INSERT INTO `UserCredentials` VALUES ('quan','ROLE_USER',b'1','$2a$10$0twQoQgdh8VYg4.vj1bBOe4sJqHazyl41ErAq/RN4ohLuHGLcKe9m');
 INSERT INTO `User` VALUES (1,24,'Quan','M','Dao','quan');
@@ -38,11 +38,11 @@ INSERT INTO `Category` (id, name, description) VALUES (2, 'vehicle', 'car, motor
 INSERT INTO `Category` (id, name, description) VALUES (3, 'appliances', 'refrigirator, Washer, Air Conditioner');
 INSERT INTO `Category` (id, name, description) VALUES (4, 'books', 'The best of me, Meet in heaven, cook book');
 
-INSERT INTO `item_category` (Item_id, Category_id) VALUES (1,2);
-INSERT INTO `item_category` (Item_id, Category_id) VALUES (2,1);
-INSERT INTO `item_category` (Item_id, Category_id) VALUES (3,1);
-INSERT INTO `item_category` (Item_id, Category_id) VALUES (4,3);
-INSERT INTO `item_category` (Item_id, Category_id) VALUES (5,3);
-INSERT INTO `item_category` (Item_id, Category_id) VALUES (6,4);
+INSERT INTO `Item_Category` (Item_id, Category_id) VALUES (1,2);
+INSERT INTO `Item_Category` (Item_id, Category_id) VALUES (2,1);
+INSERT INTO `Item_Category` (Item_id, Category_id) VALUES (3,1);
+INSERT INTO `Item_Category` (Item_id, Category_id) VALUES (4,3);
+INSERT INTO `Item_Category` (Item_id, Category_id) VALUES (5,3);
+INSERT INTO `Item_Category` (Item_id, Category_id) VALUES (6,4);
 
 
