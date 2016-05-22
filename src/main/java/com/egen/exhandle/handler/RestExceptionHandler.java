@@ -3,7 +3,7 @@ package com.egen.exhandle.handler;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Contract for classes generating a {@link ResponseEntity} for an instance of the specified
+ * Contract for classes generating a {@link org.springframework.http.ResponseEntity} for an instance of the specified
  * Exception type, used in {@link edu.mum.ezstore.config.rest.RestJsonExceptionResolver
  * RestHandlerExceptionResolver}.
  *
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface RestExceptionHandler <E extends Exception, T> {
 	/**
-     * Handles exception and generates {@link ResponseEntity}.
+     * Handles exception and generates {@link org.springframework.http.ResponseEntity}.
      *
      * @param exception The exception to handle and get data from.
      * @param request The current request.

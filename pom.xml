@@ -115,7 +115,13 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
-
+		
+		<!-- http://stackoverflow.com/questions/27808734/jdk8-error-class-file-for-javax-interceptor-interceptorbinding-not-found-whe -->
+		<dependency>
+			<groupId>javax.interceptor</groupId>
+			<artifactId>javax.interceptor-api</artifactId>
+			<version>1.2</version>
+		</dependency>
 		<!-- HttpServletRequest or HttpServletResponse -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -163,7 +169,7 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/resources/json-sanitizer-1.1.jar</systemPath>
 		</dependency>
-				
+
 	</dependencies>
 	<build>
 		<plugins>

@@ -7,7 +7,7 @@ import java.io.PrintWriter;
  * General purpose runtime exception class for wrapping and throwing exceptions
  * so that you may keep the relevent stack trace information around without
  * winding up with deeply nested exceptions. Now, when handling exceptions,
- * instead of doing something like this: <p/>
+ * instead of doing something like this: 
  * 
  * <pre>
  * 
@@ -29,7 +29,7 @@ import java.io.PrintWriter;
  * </pre>
  * 
  * Wrap your exception in a nested exception which will preserve the original
- * stack trace of the exception, like so: <p/>
+ * stack trace of the exception, like so: 
  * 
  * <pre>
  * 

@@ -45,6 +45,8 @@ public class SpelMessageInterpolator implements MessageInterpolator {
 
     /**
      * Creates a new instance with a custom {@link EvaluationContext}.
+     *
+     * @param evalContext EvaluationContext
      */
     public SpelMessageInterpolator(EvaluationContext evalContext) {
         Assert.notNull(evalContext, "EvaluationContext must not be null");

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import edu.mum.ezstore.domain.Address;
 import edu.mum.ezstore.repository.AddressRepository;
 import edu.mum.ezstore.service.AddressService;
-import edu.mum.ezstore.validator.AnnotationValidator;
 
 @Service
 @Transactional
